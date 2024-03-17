@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { CategoryList } from './CategoryList';
+import { useFetchProducts } from '../hooks/useFetchProducts';
+
 
 export const Home = () => {
   const categories = [
@@ -28,55 +30,20 @@ export const Home = () => {
   ]
 
 
+// default state for category is electronics
+  const [selectedCategoryName, setSelectedCategoryName] = useState('electronics')
 
+  const [categorisedProducts, isLoading, error] =  useFetchProducts(selectedCategoryName)
 
-  const [selectedCategoryName, setSelectedCategoryName] = useState()
-  const [categorisedProducts, setCategorisedProducts] = useState([])
 
 
 const onSelectCategory = (clickedCategoryName) =>{
-//  const filterProducts = products.filter( (item) => 
-//     item.categoryId === clickedCategoryId);
-//     setSelectedProducts(filterProducts)
-// console.log(clickedCategoryName)
 setSelectedCategoryName(clickedCategoryName)
 
   
 }
 
-// inside useEffect it execute the thing
-// with browser loading instantly
 
-
-useEffect(()=>{
-
-  const fetchProducts =  async () => {
-
-    try{
-   
-
-      const response =  await fetch(`https://fakestoreapi.com/products/category/${selectedCategoryName}`)
-    
-      if(!response.ok){
-        throw new Error('Something went wrong')
-      }
-      const product = await response.json()
-      setCategorisedProducts(product)
-      console.log(product)
-
-    } catch (error){
-      console.log(error)
-    }
-
-   
-  }
-  fetchProducts()
-
-},[selectedCategoryName] )
-
-
-  
-  
   return (
     <div className="home">
         <CategoryList 
@@ -86,10 +53,21 @@ useEffect(()=>{
         />
         <div className='products-container'>
         {
+          error && 
+          <div> {error} </div>
+        }
+        {
+          isLoading  ? <div className='loader'></div> : 
           categorisedProducts.map((product)=>(
 
             <div key={product.id} className='product-box'> 
-              {product.title}
+              <img src = {product.image} alt={product.name} />
+              <h3>{product.title}</h3>
+              <p>{product.description}</p>
+              <p className='price'>Price: {product.price} $</p>
+              <p>{product.rating.rate}* ({product.rating.count} reviews)</p>
+              <button> See Details</button>
+
             
             </div>
 
