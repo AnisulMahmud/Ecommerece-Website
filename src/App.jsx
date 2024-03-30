@@ -1,18 +1,31 @@
 import { Home } from "./components/Home";
+import { SignUp } from "./components/SignUp";
 import { Navbar } from "./components/Navbar";
+import { NotFoundPage } from "./components/NotFoundPage";
+import { ProductDetails } from "./components/ProductDetails";
+import {Routes, Route} from 'react-router-dom';
 
 function App() {
 
-  const name = 'Lalanke';
-  const age = 20;
+
 
   return (
     <>
       <div className='App'>
         <Navbar />
-        <div className="content">
-          <Home />
-        </div>
+
+        <Routes>
+
+         <Route  path="/" element={<Home />} />
+
+         <Route path="/signup" element={<SignUp />}/>
+         
+         <Route path="*" element={<NotFoundPage/>}/>
+
+         <Route path="/products/:id" element={<ProductDetails />}/>
+        
+        </Routes>
+    
       </div>
     </>
   )

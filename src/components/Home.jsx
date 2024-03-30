@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { CategoryList } from './CategoryList';
 import { useFetchProducts } from '../hooks/useFetchProducts';
+import { useNavigate } from 'react-router-dom';
 
 
 export const Home = () => {
@@ -34,7 +35,8 @@ export const Home = () => {
   const [selectedCategoryName, setSelectedCategoryName] = useState('electronics')
 
   const [categorisedProducts, isLoading, error] =  useFetchProducts(selectedCategoryName)
-
+  
+  const navigate = useNavigate()
 
 
 const onSelectCategory = (clickedCategoryName) =>{
@@ -45,7 +47,7 @@ setSelectedCategoryName(clickedCategoryName)
 
 
   return (
-    <div className="home">
+    <div className="home content" >
         <CategoryList 
           categories = {categories}
           title = "All Categories"
@@ -66,7 +68,7 @@ setSelectedCategoryName(clickedCategoryName)
               <p>{product.description}</p>
               <p className='price'>Price: {product.price} $</p>
               <p>{product.rating.rate}* ({product.rating.count} reviews)</p>
-              <button> See Details</button>
+              <button   onClick= {()=>navigate(`/products/${product.id}`) }> See Details </button>
 
             
             </div>
