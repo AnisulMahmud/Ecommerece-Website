@@ -42,7 +42,6 @@ export const Home = () => {
 const onSelectCategory = (clickedCategoryName) =>{
 setSelectedCategoryName(clickedCategoryName)
 
-  
 }
 
 
@@ -68,9 +67,8 @@ setSelectedCategoryName(clickedCategoryName)
               <p>{product.description}</p>
               <p className='price'>Price: {product.price} $</p>
               <p>{product.rating.rate}* ({product.rating.count} reviews)</p>
-              <button   onClick= {()=>navigate(`/products/${product.id}`) }> See Details </button>
+              <button onClick= {()=>navigate(`/products/${product.id}`) }> See Details </button>
 
-            
             </div>
 
           ))
